@@ -1,0 +1,11 @@
+const menu=document.getElementById('menu'),list=document.querySelector('nav ul');
+menu.addEventListener('click',()=>{const o=list.classList.toggle('open');menu.setAttribute('aria-expanded',o)});
+list.addEventListener('click',e=>{if(e.target.tagName==='A'){list.classList.remove('open');menu.setAttribute('aria-expanded',false)}});
+const links=[...document.querySelectorAll('nav ul a')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.toggleAttribute('aria-current',a.hash==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('main section').forEach(s=>io.observe(s));
+const f=document.getElementById('contact-form');
+f.addEventListener('submit',e=>{e.preventDefault();
+ const d=new FormData(f),body=`${d.get('message')}\n\nFrom: ${d.get('name')} (${d.get('email')})`;
+ location.href=`mailto:25amtics250@gmail.com?subject=${encodeURIComponent('Portfolio message from '+d.get('name'))}&body=${encodeURIComponent(body)}`;
+ document.getElementById('msg').textContent='Your email app should open with the message ready to send.';f.reset()});
